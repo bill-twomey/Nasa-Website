@@ -1,46 +1,31 @@
-import { useEffect,useState } from "react";
-
-
-function App() {
-
-  const [NasaData,setNasaData] =useState(null);
-
-  useEffect(()=> {
-  
-    const fetchdata = async ()=> {
-    try {
-    const res =await fetch('http://localhost:3000/api/nasa',{mode:"cors"});
-    const data =await res.json();
-    setNasaData(data);}
-    catch(error){
-      console.error(error)}
-
-  }
-  fetchdata();
-},[]);
+import React from 'react';
+import { BrowserRouter as Router,Route,Link,Routes} from 'react-router-dom';
+import Apod from './pages/apod'
+import Asteroid from './pages/asteroid'
+import Header from './components/header'
+import Home from './pages/home'
 
 
 
+const App =() => {
   return (
-    <div className="bg-black min-h-screen text-white p-8 ">
-    <div className="max-w-4xl mx-auto space-y-6 flex flex-col">
-    <header className="text-center">
-      <h1 className="text-4xl font-bold ">Astronomy Picture of the Day Apod</h1>
+  <Router>
+    <Header/>
+    {/* <nav>
+      <ul>
+        <li> <Link to="/Apod"> Apod page </Link></li>
+        <li> <Link to="/Asteroid"> Asteroid page </Link> </li>
+      </ul>
+    </nav> */}
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/apod" element={<Apod/>}/>
+      <Route path="/asteroid" element={<Asteroid/>}/>
 
-    </header>
-    <main className="">
-     <div className="text-center">
-      <p>{NasaData?.title}</p>
-      <img className="max-h-[450px] w-auto object-contain mx-auto"src={NasaData?.url} alt="image" />
-     </div>
-      <p>{NasaData?.explanation}</p>
+    </Routes>
 
-
-    </main>
-    </div>
-    </div>
-  );
-};
-
+  </Router>
+  )
+}
 
 export default App;
