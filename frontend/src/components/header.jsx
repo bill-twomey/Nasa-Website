@@ -3,15 +3,17 @@ import {Link} from 'react-router-dom'
 
 const Header =() => {
     return (
-        <header className="bg-black text-white ">
-            <h1 className='font-bold text-center'>Nasa website</h1>
-            <nav className="">
-                <ul className='flex flex-row justify-center space-x-6' >
-                    <li><Link to="/"> Home page</Link></li>
-                    <li><Link to="/apod"> Apod page</Link></li>
-                    <li><Link to="/asteroid">Asteroid page</Link></li>
-                </ul>
+        <header className="bg-black text-white py-4">
+            <div className="max-w-6xl mx-auto flex flex-col items-center px-4 ">
+           
+            <nav className="space-x-4">
+                
+                   <Link to="/" className="hover:underline"> Home page</Link>
+                    <Link to="/apod" className="hover:underline"> Astronomy Picture of the Day</Link>
+                   <Link to="/asteroid" className="hover:underline">Asteroids - Near Earth Object</Link>
+              
             </nav>
+            </div>
         </header>
 
     )

@@ -1,6 +1,8 @@
 import { useEffect,useState } from "react";
+const api_route=import.meta.env.VITE_API_URL
 
 const Apod =() => {
+
 
   const [NasaData,setNasaData] =useState(null);
   const [searchDate,setsearchDate]=useState("");
@@ -20,7 +22,7 @@ const Apod =() => {
     const fetchdata = async ()=> {
       setLoading(true)
     try {
-    const res =await fetch('http://localhost:3000/api/apod',{mode:"cors"});
+    const res =await fetch(`${api_route}/api/apod`,{mode:"cors"});
     const data =await res.json();
     setNasaData(data)
     setLoading(false)}
@@ -51,7 +53,7 @@ const submitSearch =async () => {
 
 
   try {
-  const response = await fetch('http://localhost:3000/api/getSearchDate', 
+  const response = await fetch(`${api_route}/api/apod/getSearchDate`, 
                     {method: "POST",
                       headers: { 'Content-Type': 'application/json' },
                     body:JSON.stringify({searchDate})} )
@@ -59,7 +61,7 @@ const submitSearch =async () => {
                 if (recd) {
                      
     
-    const res =await fetch('http://localhost:3000/api/apodSearchDate',{mode:"cors"});
+    const res =await fetch(`${api_route}/api/apod/SearchDate`,{mode:"cors"});
       if (!res.ok) {
         let errorMessage ="something went wrong"
         setSearching(false)
@@ -87,23 +89,49 @@ const submitSearch =async () => {
  } 
         
   if (loading) {
-    return <p>loading...</p>
+    return (
+  <div className="flex justify-center items-center min-h-screen bg-black text-white">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+    </div>
+    )
   }
   else {
   return (
-    <div className="bg-black min-h-screen text-white p-8 ">
-    <div className="max-w-6xl mx-auto space-y-6 flex flex-col">
+    <div className="bg-black min-h-screen text-white px-4 sm:px-4 md:px-6 lg:px-8 pt-4 pb-8 ">
+    <div className="max-w-7xl mx-auto space-y-6 ">
 
-      <h2 className="text-4xl font-bold text-center ">Astronomy Picture of the Day Apod</h2>
-      <label className="">
-      <input  value={searchDate} onChange={userSearch} className="border-white bg-white text-black p-1" type ="date" name="search" placeholder="input a date"/>
-      <button className="ml-3 bg-blue-900 rounded p-1 px-2" onClick={submitSearch} type="submit">Search</button>
-      </label>
-      {searching && (
-        <span>Searching.... </span>
+      <h2 className="text-3xl font-bold text-center ">Astronomy Picture of the Day </h2>
+
+      <div className="text-center space-y-2 mb-8">
+      <p>Search for past images. Enter a date below:</p>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+   
+        <div className="flex items-center gap-2">
+      <input  value={searchDate} onChange={userSearch} className="border-white bg-white text-black p-1 rounded" type ="date" name="search" placeholder="input a date"/>
+      <button className="ml-3 bg-blue-900 hover:bg-blue-700 rounded p-1 px-2" onClick={submitSearch} type="submit">Search</button>
+      </div>
+         {searching && (
+        <div className="text-center">
+        <span className="text-sm sm:ml-4">Searching.... </span>
+        </div>
+
       )}
-      {searchinputerror && <p>{searchinputerror}</p>}
-      {errorMessage && <p>{errorMessage}</p>}
+
+
+       </div>
+      </div>
+      
+ 
+      {searchinputerror && (
+        <div className="text-center">
+      <p>{searchinputerror}</p>
+      </div>
+    )}
+      {errorMessage && (
+        <div className="text-center">
+        <p>{errorMessage}</p>
+        </div>
+        )}
 
  
     <main className="">
@@ -120,13 +148,18 @@ const submitSearch =async () => {
 
 
       {NasaData &&(
-      <div className="flex flex-row justify-items" >
-     <div className="text-center w-2/3">
-      <p>{NasaData?.title}</p>
-      <img className="max-h-[450px] w-auto object-contain mx-auto"src={NasaData?.url} alt="image"  />
+      <div className="flex flex-col lg:flex-row gap-5 items-start" >
+
+     <div className="text-center lg:w-[60%] w-full flex justify-center">
+     <div className="w-full">
+      <h3 className="font-semibold mb-2">{NasaData?.title}</h3>
+      <img className="max-h-[60vh] w-full object-contain mx-auto rounded shadow-lg"src={NasaData?.url} alt="image"  />
+      </div>
      </div>
-     <div className="w-1/3">
-      <p>{NasaData?.explanation}</p>
+     <div className="w-full text-left lg:w-[40%] max-h-[80vh]  ">
+      <div className="bg-neutral-850 rounded-lg p-4 shadow-md">
+      <p className="leading-relaxed">{NasaData?.explanation}</p>
+      </div>
       </div>
 
      </div>
