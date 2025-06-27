@@ -34,11 +34,11 @@ https://nasa-website-five.vercel.app/
 
 ## Add Environment Variables
 - Create a .env file in the frontend directory
-- Add VITE_API_URL= local host
+- Add VITE_API_URL= http://localhost:3000
 
 - Create a .env file in the backend directory
-- add NASA_API_KEY=your_nasa_api_key
-- add GROQ_API_KEY=your_groq_api_key
+- Add NASA_API_KEY=your_nasa_api_key
+- Add GROQ_API_KEY=your_groq_api_key
 - See https://console.groq.com/home and https://api.nasa.gov/
 
 ## Run the backend 
