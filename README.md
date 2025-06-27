@@ -12,15 +12,15 @@ Create a website to connect to NASA's open API data and display data such as Ast
 
 
 ## Tech Stack
-# Frontend
+## Frontend
 - React (with Vite)
 - Tailwind CSS
 
-# Backend
+## Backend
 - Node.js
 - Express.js
 
-# Hosting
+## Hosting
 - Vercel for frontend
 - Render for backend
 
