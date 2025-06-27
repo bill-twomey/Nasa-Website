@@ -13,6 +13,9 @@ app.use('/api',asteroidRoutes);
 const apodRoutes =require('./routes/apod');
 app.use('/api',apodRoutes);
 
+const getAIRoutes = require('./routes/getai');
+app.use('/api',getAIRoutes);
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
